@@ -8,12 +8,17 @@ export default defineConfig({
   plugins: [
     vue(),
     VitePWA({
+      registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+      },
       manifest: {
         name: 'MARVEL SNAP ZONE',
         short_name: 'SNAP ZONE',
         description: 'marvel snap zone',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        display: 'standalone',
+        theme_color: '#14171b',
+        background_color: '#14171b',
         icons: [
           {
             src: 'pwa-192x192.png',
