@@ -15,7 +15,7 @@ const { data, isFinished } = useFetch('http://192.168.201.114:3000/search').json
         <li v-for="{ id, pretty_url, image, name } of data.card" :key="id">
           <router-link :to="`/${pretty_url}`">
             <div class="relative mb-0.5 pb-[100%] h-0">
-              <img class="absolute inset-0 w-full h-full" :src="image" :alt="name" />
+              <img class="absolute inset-0 w-full h-full" v-lazy="image" :alt="name" />
             </div>
             <p class="text-xs text-center">{{ name }}</p>
           </router-link>
