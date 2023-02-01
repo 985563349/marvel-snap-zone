@@ -3,7 +3,9 @@ import { useRoute } from 'vue-router';
 import { useFetch } from '@vueuse/core';
 
 const router = useRoute();
-const { data, isFinished } = useFetch(`http://localhost:3000/card/${router.params.id}`).json();
+const { data, isFinished } = useFetch(
+  `http://192.168.201.114:3000/card/${router.params.id}`
+).json();
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useFetch } from '@vueuse/core';
 
-const { data, isFinished } = useFetch('http://localhost:3000/search').json();
+const { data, isFinished } = useFetch('http://192.168.201.114:3000/search').json();
 </script>
 
 <template>
