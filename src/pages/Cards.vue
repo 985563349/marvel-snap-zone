@@ -11,7 +11,7 @@ const { data, isFinished } = useFetch('http://192.168.201.114:3000/cards').json(
     <div v-else>
       <h1 class="my-4 text-center text-xl">Marvel Snap Card Database</h1>
 
-      <ul class="grid gap-2 grid-cols-3">
+      <ul class="grid gap-2 grid-cols-3 xl:grid-cols-6">
         <li v-for="{ url, art, name } of data">
           <router-link :to="`/cards/${url.match(/[^/]+$/)[0]}`">
             <div class="relative mb-0.5 pb-[100%] h-0">
