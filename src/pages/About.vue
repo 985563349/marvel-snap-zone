@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { useFetch } from '@vueuse/core';
+import { watchEffect } from 'vue';
 
 const router = useRoute();
 const { data, isFinished } = useFetch(
-  `http://192.168.201.114:3000/card/${router.params.id}`
+  `http://192.168.201.114:3000/cards/${router.params.id}`
 ).json();
 </script>
 
@@ -17,7 +18,7 @@ const { data, isFinished } = useFetch(
 
       <article class="flex flex-col">
         <div class="relative pb-[100%] w-full h-0">
-          <img class="absolute inset-0 w-full h-full" :src="data.image" :alt="data.name" />
+          <img class="absolute inset-0 w-full h-full" :src="data.art" :alt="data.name" />
         </div>
 
         <ol class="flex flex-col gap-6 my-6">
@@ -28,7 +29,7 @@ const { data, isFinished } = useFetch(
 
           <li>
             <p class="mb-3 text-xl">Description</p>
-            <p class="text-gray">{{ data.ability }}</p>
+            <p class="text-gray">{{ data.description }}</p>
           </li>
 
           <li>
@@ -47,7 +48,12 @@ const { data, isFinished } = useFetch(
 
           <li>
             <p class="mb-3 text-xl">Source</p>
-            <p class="text-gray">{{ data.method }}</p>
+            <p class="text-gray">{{ data.source }}</p>
+          </li>
+
+          <li>
+            <p class="mb-3 text-xl">Status</p>
+            <p class="text-gray">{{ data.status }}</p>
           </li>
         </ol>
       </article>
@@ -55,11 +61,11 @@ const { data, isFinished } = useFetch(
       <div class="mb-5">
         <h3 class="mb-3 text-2xl">Variants</h3>
 
-        <ol class="flex flex-wrap">
-          <li v-for="variant of data.variant_images" :key="variant" class="w-1/2">
-            <img class="w-full" :src="variant" :alt="data.name" />
+        <ul class="flex flex-wrap">
+          <li v-for="variant_image of data.variant_images" class="w-1/3">
+            <img class="w-full" :src="variant_image" :alt="data.name" />
           </li>
-        </ol>
+        </ul>
       </div>
     </div>
   </div>
