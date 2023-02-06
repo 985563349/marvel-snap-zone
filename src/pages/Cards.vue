@@ -17,6 +17,15 @@ const { isLoading, isError, data, error } = useQuery({
     <div v-else-if="isError">Error: {{ error }}</div>
 
     <div v-else-if="data">
+      <ul class="flex px-4 py-4 gap-4 text-purple-500 text-sm">
+        <li>
+          <router-link to="/">HOME</router-link>
+        </li>
+        <li>
+          <span>CARDS</span>
+        </li>
+      </ul>
+
       <h1 class="my-4 text-center text-xl">Marvel Snap Card Database</h1>
 
       <div class="my-8 px-4">
