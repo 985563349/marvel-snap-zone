@@ -19,18 +19,14 @@ const { isLoading, isError, data, error } = useQuery({
 
     <div v-else-if="isError">Error: {{ error }}</div>
 
-    <div v-else-if="data" class="overflow-hidden">
-      <ul class="flex px-4 py-4 gap-4 text-purple-500 text-sm">
-        <li>
-          <router-link to="/">HOME</router-link>
-        </li>
-        <li>
-          <router-link to="/cards">CARDS</router-link>
-        </li>
-        <li>
-          <span>{{ data.name.toUpperCase() }}</span>
-        </li>
-      </ul>
+    <div v-else-if="data">
+      <nav class="space-x-2 p-4 text-purple-500 text-sm font-semibold">
+        <router-link to="/" class="hover:text-purple-400">HOME</router-link>
+        <span class="select-none">/</span>
+        <router-link to="/cards" class="hover:text-purple-400">CARDS</router-link>
+        <span class="select-none">/</span>
+        <span>{{ data.name.toUpperCase() }}</span>
+      </nav>
 
       <div class="mx-auto w-[88vw]">
         <h1 class="my-5 text-3xl">{{ data.name }}</h1>
@@ -79,7 +75,7 @@ const { isLoading, isError, data, error } = useQuery({
           </ul>
         </article>
 
-        <div class="mb-5">
+        <div>
           <h3 class="mb-3 text-2xl">Variants</h3>
 
           <ul class="flex flex-wrap">
