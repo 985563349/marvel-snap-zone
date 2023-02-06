@@ -1,19 +1,25 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { useFetch } from '@vueuse/core';
-import { watchEffect } from 'vue';
+import { useQuery } from '@tanstack/vue-query';
 
 const router = useRoute();
-const { data, isFinished } = useFetch(
-  `http://192.168.201.114:3000/cards/${router.params.id}`
-).json();
+
+const fetcher = (id: string) =>
+  fetch(`http://192.168.201.114:3000/cards/${id}`).then((response) => response.json());
+
+const { isLoading, isError, data, error } = useQuery({
+  queryKey: ['card-detail', router.params.id],
+  queryFn: () => fetcher(router.params.id as string),
+});
 </script>
 
 <template>
   <div>
-    <div v-if="!isFinished">Loading...</div>
+    <div v-if="isLoading">Loading...</div>
 
-    <div v-else class="mx-auto w-[88vw] overflow-hidden">
+    <div v-else-if="isError">Error: {{ error }}</div>
+
+    <div v-else-if="data" class="mx-auto w-[88vw] overflow-hidden">
       <h1 class="my-5 text-3xl">{{ data.name }}</h1>
 
       <article class="flex flex-col xl:flex-row gap-6">

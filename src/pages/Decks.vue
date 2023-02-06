@@ -1,17 +1,28 @@
 <script setup lang="ts">
-import { useFetch, useClipboard } from '@vueuse/core';
+import { useQuery } from '@tanstack/vue-query';
+import { useClipboard } from '@vueuse/core';
+
 import { timeAgo } from '@/utils';
 import download from '@/assets/download.svg';
 
-const { data, isFinished } = useFetch('http://192.168.201.114:3000/decks').json();
+const fetcher = () =>
+  fetch('http://192.168.201.114:3000/decks').then((response) => response.json());
+
+const { isLoading, isError, data, error } = useQuery({
+  queryKey: ['decks'],
+  queryFn: fetcher,
+});
+
 const { copy, isSupported } = useClipboard();
 </script>
 
 <template>
   <div>
-    <div v-if="!isFinished">Loading...</div>
+    <div v-if="isLoading">Loading...</div>
 
-    <div v-else>
+    <div v-else-if="isError">Error: {{ error }}</div>
+
+    <div v-else-if="data">
       <h1 class="my-4 text-center text-xl">Marvel Snap Decks Database</h1>
 
       <div class="my-8 px-4">

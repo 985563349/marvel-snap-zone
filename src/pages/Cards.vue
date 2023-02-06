@@ -1,15 +1,35 @@
 <script setup lang="ts">
-import { useFetch } from '@vueuse/core';
+import { useQuery } from '@tanstack/vue-query';
 
-const { data, isFinished } = useFetch('http://192.168.201.114:3000/cards').json();
+const fetcher = () =>
+  fetch('http://192.168.201.114:3000/cards').then((response) => response.json());
+
+const { isLoading, isError, data, error } = useQuery({
+  queryKey: ['cards'],
+  queryFn: fetcher,
+});
 </script>
 
 <template>
   <div>
-    <div v-if="!isFinished">Loading...</div>
+    <div v-if="isLoading">Loading...</div>
 
-    <div v-else>
+    <div v-else-if="isError">Error: {{ error }}</div>
+
+    <div v-else-if="data">
       <h1 class="my-4 text-center text-xl">Marvel Snap Card Database</h1>
+
+      <div class="my-8 px-4">
+        <form class="flex flex-wrap gap-4">
+          <label class="block w-full max-w-sm">
+            <input
+              name="search"
+              class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
+              placeholder="Search"
+            />
+          </label>
+        </form>
+      </div>
 
       <ul class="grid gap-2 grid-cols-3 xl:grid-cols-6">
         <li v-for="{ url, art, name } of data">

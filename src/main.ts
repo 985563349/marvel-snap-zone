@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 import VueLazyLoad from 'vue-lazyload';
 import 'uno.css';
 import '@unocss/reset/tailwind.css';
@@ -10,6 +11,7 @@ import loadimage from './assets/card_back.webp';
 
 createApp(App)
   .use(router)
+  .use(VueQueryPlugin)
   .use(VueLazyLoad, {
     preLoad: 1.3,
     error: loadimage,
