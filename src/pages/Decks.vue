@@ -88,8 +88,8 @@ const { copy, isSupported } = useClipboard();
       <ul class="flex flex-col divide-y divide-solid divide-gray-700">
         <template v-for="{ decks } of data.pages">
           <li v-for="{ deck } of decks" class="py-6 first:pt-0 last:pb-0">
-            <div class="flex justify-between mb-4">
-              <p class="space-x-2">
+            <div class="flex justify-between items-start mb-4">
+              <p class="flex-1 space-x-2">
                 <span class="text-sm">{{ deck.info.name }}</span>
                 <span class="text-xs text-gray-500">{{ timeAgo(deck.info.lastup) }}</span>
               </p>
@@ -98,10 +98,10 @@ const { copy, isSupported } = useClipboard();
               </span>
             </div>
 
-            <ul class="grid grid-cols-6">
+            <ul class="grid grid-cols-6 gap-y-4">
               <li v-for="{ art, cname } of deck.decklist.cards">
                 <div class="relative pb-[100%] h-0">
-                  <img class="absolute inset-0 w-full h-full" v-lazy="art" :alt="cname" />
+                  <img class="absolute inset-0 w-full h-full scale-125" v-lazy="art" :alt="cname" />
                 </div>
               </li>
             </ul>
@@ -109,7 +109,7 @@ const { copy, isSupported } = useClipboard();
         </template>
       </ul>
 
-      <div class="py-6 text-center text-sm" @click="() => fetchNextPage()">Loading...</div>
+      <div v-if="hasNextPage" class="py-6 text-center text-sm">Loading...</div>
     </div>
   </div>
 </template>
