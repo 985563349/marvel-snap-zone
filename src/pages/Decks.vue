@@ -1,17 +1,35 @@
 <script setup lang="ts">
-import { useQuery } from '@tanstack/vue-query';
-import { useClipboard } from '@vueuse/core';
+import { watch, watchEffect } from 'vue';
+import { useInfiniteQuery } from '@tanstack/vue-query';
+import { useClipboard, useScroll } from '@vueuse/core';
 
 import { timeAgo } from '@/utils';
 import download from '@/assets/download.svg';
 
-const fetcher = () =>
-  fetch('http://192.168.201.114:3000/decks').then((response) => response.json());
+const fetcher = ({ pageParam = 0 }) =>
+  fetch(`http://192.168.201.114:3000/decks?nextpage=${pageParam}`).then((response) =>
+    response.json()
+  );
 
-const { isLoading, isError, data, error } = useQuery({
-  queryKey: ['decks'],
-  queryFn: fetcher,
+const { isLoading, isFetching, isError, data, error, hasNextPage, fetchNextPage } =
+  useInfiniteQuery({
+    queryKey: ['decks'],
+    queryFn: fetcher,
+    getNextPageParam: (lastPage, pages) => lastPage.current_page + 1,
+  });
+
+const { arrivedState } = useScroll(window, {
+  offset: { bottom: 200 },
 });
+
+watch(
+  () => arrivedState.bottom,
+  () => {
+    if (arrivedState.bottom && hasNextPage?.value && isFetching.value === false) {
+      fetchNextPage();
+    }
+  }
+);
 
 const { copy, isSupported } = useClipboard();
 </script>
@@ -68,28 +86,30 @@ const { copy, isSupported } = useClipboard();
 
     <div v-else-if="data" class="px-4">
       <ul class="flex flex-col divide-y divide-solid divide-gray-700">
-        <li v-for="{ deck } of data" class="py-6 first:pt-0 last:pb-0">
-          <div class="flex justify-between mb-4">
-            <p class="space-x-2">
-              <span class="text-sm">{{ deck.info.name }}</span>
-              <span class="text-xs text-gray-500">{{ timeAgo(deck.info.lastup) }}</span>
-            </p>
-            <span v-if="isSupported" @click="copy(deck.info.code)">
-              <img class="w-5 h-5" :src="download" alt="download" />
-            </span>
-          </div>
+        <template v-for="{ decks } of data.pages">
+          <li v-for="{ deck } of decks" class="py-6 first:pt-0 last:pb-0">
+            <div class="flex justify-between mb-4">
+              <p class="space-x-2">
+                <span class="text-sm">{{ deck.info.name }}</span>
+                <span class="text-xs text-gray-500">{{ timeAgo(deck.info.lastup) }}</span>
+              </p>
+              <span v-if="isSupported" @click="copy(deck.info.code)">
+                <img class="w-5 h-5" :src="download" alt="download" />
+              </span>
+            </div>
 
-          <ul class="grid grid-cols-6">
-            <li v-for="{ art, cname } of deck.decklist.cards">
-              <div class="relative pb-[100%] h-0">
-                <img class="absolute inset-0 w-full h-full" v-lazy="art" :alt="cname" />
-              </div>
-            </li>
-          </ul>
-        </li>
+            <ul class="grid grid-cols-6">
+              <li v-for="{ art, cname } of deck.decklist.cards">
+                <div class="relative pb-[100%] h-0">
+                  <img class="absolute inset-0 w-full h-full" v-lazy="art" :alt="cname" />
+                </div>
+              </li>
+            </ul>
+          </li>
+        </template>
       </ul>
 
-      <div class="py-6 text-center text-sm">Loading...</div>
+      <div class="py-6 text-center text-sm" @click="() => fetchNextPage()">Loading...</div>
     </div>
   </div>
 </template>
