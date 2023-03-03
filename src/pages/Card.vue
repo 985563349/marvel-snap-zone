@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/vue-query';
 const router = useRoute();
 
 const fetcher = (id: string) =>
-  fetch(`http://192.168.201.114:3000/cards/${id}`).then((response) => response.json());
+  fetch(`http://192.168.201.114:3000/api/cards/${id}`).then((response) => response.json());
 
 const { isLoading, isError, data, error } = useQuery({
   queryKey: ['card-detail', router.params.id],

@@ -7,7 +7,7 @@ import { timeAgo } from '@/utils';
 import download from '@/assets/download.svg';
 
 const fetcher = ({ pageParam = 0 }) =>
-  fetch(`http://192.168.201.114:3000/decks?nextpage=${pageParam}`).then((response) =>
+  fetch(`http://192.168.201.114:3000/api/decks?nextpage=${pageParam}`).then((response) =>
     response.json()
   );
 

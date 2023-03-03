@@ -2,11 +2,12 @@
 import { useQuery } from '@tanstack/vue-query';
 
 const fetcher = () =>
-  fetch('http://192.168.201.114:3000/cards').then((response) => response.json());
+  fetch('http://192.168.201.114:3000/api/cards').then((response) => response.json());
 
 const { isLoading, isError, data, error } = useQuery({
   queryKey: ['cards'],
   queryFn: fetcher,
+  networkMode: 'always',
 });
 </script>
 
