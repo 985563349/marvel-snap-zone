@@ -37,12 +37,12 @@ const { isLoading, isError, data, error } = useQuery({
 
     <div v-else-if="isError">Error: {{ error }}</div>
 
-    <div v-else-if="data" class="px-4">
-      <ul class="grid gap-y-6 grid-cols-3">
+    <div v-else-if="data" class="p-4">
+      <ul class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-y-6">
         <li v-for="{ url, art, name } of data">
           <router-link :to="`/cards/${url.match(/[^/]+$/)[0]}`">
             <div class="relative mb-4 pb-[100%] h-0">
-              <img class="absolute inset-0 w-full h-full scale-125" v-lazy="art" :alt="name" />
+              <img class="absolute inset-0 w-full h-full scale-125 pointer-events-none" v-lazy="art" :alt="name" />
             </div>
             <p class="text-xs text-center">{{ name }}</p>
           </router-link>

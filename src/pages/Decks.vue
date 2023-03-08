@@ -93,12 +93,12 @@ const { copy, isSupported } = useClipboard();
                 <span class="text-sm">{{ deck.info.name }}</span>
                 <span class="text-xs text-gray-500">{{ timeAgo(deck.info.lastup) }}</span>
               </p>
-              <span v-if="isSupported" @click="copy(deck.info.code)">
+              <span v-if="isSupported" class="cursor-pointer" @click="copy(deck.info.code)">
                 <img class="w-5 h-5" :src="download" alt="download" />
               </span>
             </div>
 
-            <ul class="grid grid-cols-6 gap-y-4">
+            <ul class="grid grid-cols-6 md:grid-cols-9 lg:grid-cols-12 gap-y-4">
               <li v-for="{ art, cname } of deck.decklist.cards">
                 <div class="relative pb-[100%] h-0">
                   <img class="absolute inset-0 w-full h-full scale-125" v-lazy="art" :alt="cname" />
