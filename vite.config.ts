@@ -18,7 +18,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
         runtimeCaching: [
           {
-            urlPattern: ({ url }) => url.pathname.endsWith('/api/cards'),
+            urlPattern: ({ url }) => url.pathname.includes('/api/cards'),
             handler: 'CacheFirst',
             method: 'GET',
             options: {
