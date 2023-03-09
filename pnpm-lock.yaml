@@ -5,6 +5,7 @@ specifiers:
   '@unocss/reset': ^0.49.1
   '@vitejs/plugin-vue': ^4.0.0
   '@vueuse/core': ^9.12.0
+  lodash: ^4.17.21
   typescript: ^4.9.3
   unocss: ^0.49.1
   vite: ^4.0.0
@@ -18,6 +19,7 @@ dependencies:
   '@tanstack/vue-query': 4.24.4_vue@3.2.45
   '@unocss/reset': 0.49.1
   '@vueuse/core': 9.12.0_vue@3.2.45
+  lodash: 4.17.21
   vue: 3.2.45
   vue-lazyload: 3.0.0-rc.2
   vue-router: 4.1.6_vue@3.2.45
@@ -2894,7 +2896,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /lru-cache/5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useQuery } from '@tanstack/vue-query';
+import { kebabCase } from 'lodash';
 
 const fetcher = () =>
   fetch('http://192.168.201.114:3000/api/cards').then((response) => response.json());
@@ -39,8 +40,8 @@ const { isLoading, isError, data, error } = useQuery({
 
     <div v-else-if="data" class="p-4">
       <ul class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-y-6">
-        <li v-for="{ url, art, name } of data">
-          <router-link :to="`/cards/${url.match(/[^/]+$/)[0]}`">
+        <li v-for="{ cid, url, art, name } of data">
+          <router-link :to="`/cards/${kebabCase(name)}?cid=${cid}`">
             <div class="relative mb-4 pb-[100%] h-0">
               <img class="absolute inset-0 w-full h-full scale-125 pointer-events-none" v-lazy="art" :alt="name" />
             </div>
