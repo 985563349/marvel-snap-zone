@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@tanstack/vue-query': ^4.24.4
+  '@types/lodash': ^4.14.191
   '@unocss/reset': ^0.49.1
   '@vitejs/plugin-vue': ^4.0.0
   '@vueuse/core': ^9.12.0
@@ -25,6 +26,7 @@ dependencies:
   vue-router: 4.1.6_vue@3.2.45
 
 devDependencies:
+  '@types/lodash': 4.14.191
   '@vitejs/plugin-vue': 4.0.0_vite@4.0.4+vue@3.2.45
   typescript: 4.9.5
   unocss: 0.49.1_vite@4.0.4
@@ -1630,6 +1632,10 @@ packages:
 
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/node/18.11.18:

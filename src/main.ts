@@ -17,5 +17,6 @@ createApp(App)
     error: loadimage,
     loading: loadimage,
     attempt: 1,
+    throttleWait: 4,
   })
   .mount('#app');

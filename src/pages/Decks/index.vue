@@ -1,22 +1,20 @@
+<script lang="ts">
+export default {
+  name: 'Decks',
+};
+</script>
+
 <script setup lang="ts">
-import { watch, watchEffect } from 'vue';
-import { useInfiniteQuery } from '@tanstack/vue-query';
-import { useClipboard, useScroll } from '@vueuse/core';
+import { watch } from 'vue';
+import { useScroll, useClipboard } from '@vueuse/core';
 
 import { timeAgo } from '@/utils';
 import download from '@/assets/download.svg';
 
-const fetcher = ({ pageParam = 0 }) =>
-  fetch(`http://192.168.201.114:3000/api/decks?nextpage=${pageParam}`).then((response) =>
-    response.json()
-  );
+import useDecks from './composables/useDecks';
 
-const { isLoading, isFetching, isError, data, error, hasNextPage, fetchNextPage } =
-  useInfiniteQuery({
-    queryKey: ['decks'],
-    queryFn: fetcher,
-    getNextPageParam: (lastPage, pages) => lastPage.current_page + 1,
-  });
+const { isLoading, isError, isFetching, search, data, error, hasNextPage, fetchNextPage } =
+  useDecks();
 
 const { arrivedState } = useScroll(window, {
   offset: { bottom: 200 },
@@ -48,6 +46,7 @@ const { copy, isSupported } = useClipboard();
       <form class="flex flex-wrap gap-4">
         <label class="block w-full max-w-sm">
           <select
+            v-model="search.sources"
             name="sources"
             class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
           >
@@ -66,6 +65,7 @@ const { copy, isSupported } = useClipboard();
 
         <label class="block w-full max-w-sm">
           <select
+            v-model="search.abilities"
             name="abilities"
             class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
           >

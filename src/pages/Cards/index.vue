@@ -1,31 +1,19 @@
+<script lang="ts">
+export default {
+  name: 'Cards',
+};
+</script>
+
 <script setup lang="ts">
-import { reactive, computed } from 'vue';
-import { useQuery } from '@tanstack/vue-query';
 import { kebabCase } from 'lodash';
 
-const fetcher = () =>
-  fetch('http://192.168.201.114:3000/api/cards').then((response) => response.json());
+import useCards from './composables/useCards';
+import useFilteredCards from './composables/useFilteredCards';
 
-const { isLoading, isError, data, error } = useQuery({
-  queryKey: ['cards'],
-  queryFn: fetcher,
-  networkMode: 'always',
-});
+const { isLoading, isError, data, error } = useCards();
+const { filter, filteredCards } = useFilteredCards(data);
 
-const formData = reactive({
-  name: '',
-  pool: '',
-});
-
-const cards = computed(() => data.value?.filter((card) => {
-  const { name, pool } = formData;
-  const isNameMatch = !name || card.name.includes(name);
-  const isPoolMatch = !pool || card.source === pool;
-
-  return isNameMatch && isPoolMatch;
-}));
-
-const options = [
+const pools = [
   'Starter Card',
   'Collection Level 1-14',
   'Collection Level 18-214 (Pool 1)',
@@ -34,7 +22,7 @@ const options = [
   'Series 4 Rare - Collection Level 486+ (Pool 4)',
   'Series 5 Ultra Rare - Collection Level 486+ (Pool 5)',
   'Recruit Season',
-  'Season Pass'
+  'Season Pass',
 ];
 </script>
 
@@ -52,8 +40,8 @@ const options = [
       <form class="flex flex-wrap gap-4">
         <label class="block w-full max-w-sm">
           <input
-            v-model="formData.name"
-            name="search"
+            v-model.lazy="filter.name"
+            name="name"
             class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
             placeholder="Search"
           />
@@ -61,12 +49,12 @@ const options = [
 
         <label class="block w-full max-w-sm">
           <select
-            v-model="formData.pool"
-            name="abilities"
+            v-model="filter.pool"
+            name="pool"
             class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
           >
             <option disabled value="">Source</option>
-            <option v-for="option of options" :value="option">{{ option }}</option>
+            <option v-for="pool of pools" :value="pool">{{ pool }}</option>
           </select>
         </label>
       </form>
@@ -76,12 +64,16 @@ const options = [
 
     <div v-else-if="isError">Error: {{ error }}</div>
 
-    <div v-else-if="cards" class="p-4">
+    <div v-else-if="filteredCards" class="p-4">
       <ul class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-y-6">
-        <li v-for="{ cid, url, art, name } of cards">
+        <li v-for="{ cid, art, name } of filteredCards">
           <router-link :to="`/cards/${kebabCase(name)}?cid=${cid}`">
             <div class="relative mb-4 pb-[100%] h-0">
-              <img class="absolute inset-0 w-full h-full scale-125 pointer-events-none" v-lazy="art" :alt="name" />
+              <img
+                class="absolute inset-0 w-full h-full scale-125 pointer-events-none"
+                v-lazy="art"
+                :alt="name"
+              />
             </div>
             <p class="text-xs text-center">{{ name }}</p>
           </router-link>
