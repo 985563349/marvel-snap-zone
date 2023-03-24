@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/vue-query';
-import type { Ref } from 'vue';
 
-type MaybeRef<T> = Ref<T> | T;
-
-export default function useCardDecks(cid: string, enabled: MaybeRef<boolean | undefined>) {
+export default function useCardDecks(cid: string) {
   const fetcher = (cid: string) =>
     fetch(`https://marvel-snap-crawler.vercel.app/api/cards/${cid}/decks`).then((response) =>
       response.json()
@@ -12,6 +9,5 @@ export default function useCardDecks(cid: string, enabled: MaybeRef<boolean | un
   return useQuery({
     queryKey: ['card-desks', cid],
     queryFn: () => fetcher(cid),
-    enabled,
   });
 }

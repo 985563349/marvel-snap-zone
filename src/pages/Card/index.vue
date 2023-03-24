@@ -17,12 +17,12 @@ import useCardDecks from './composables/useCardDecks';
 
 const router = useRoute();
 const { id } = router.params as { id: string };
-const { cid } = router.query as { cid?: string };
+const { cid } = router.query as { cid: string };
 
 const cardInfoQueryReturn = reactive(useCardInfo(id));
 const cardInfo = toRef(cardInfoQueryReturn, 'data');
 
-const cardDecksQueryReturn = reactive(useCardDecks(cid!, !!cid));
+const cardDecksQueryReturn = reactive(useCardDecks(cid));
 const cardDecks = toRef(cardDecksQueryReturn, 'data');
 
 const { copy, isSupported } = useClipboard();
