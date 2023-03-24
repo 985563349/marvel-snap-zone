@@ -11,7 +11,7 @@ type CardModel = {
 
 export default function useCards() {
   const fetcher = () =>
-    fetch('http://192.168.201.114:3000/api/cards').then((response) => response.json());
+    fetch('https://marvel-snap-crawler.vercel.app/api/cards').then((response) => response.json());
 
   return useQuery<CardModel[]>({
     queryKey: ['cards'],

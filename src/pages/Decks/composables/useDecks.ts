@@ -9,7 +9,7 @@ export default function useDecks() {
 
   const fetcher = ({ pageParam = 0, queryKey }: any) => {
     const params = new URLSearchParams({ nextpage: pageParam, ...queryKey[1] }).toString();
-    return fetch(`http://192.168.201.114:3000/api/decks?${params}`).then((response) =>
+    return fetch(`https://marvel-snap-crawler.vercel.app/api/decks?${params}`).then((response) =>
       response.json()
     );
   };
