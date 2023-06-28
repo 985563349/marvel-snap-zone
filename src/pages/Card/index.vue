@@ -17,12 +17,11 @@ import useCardDecks from './composables/useCardDecks';
 
 const router = useRoute();
 const { id } = router.params as { id: string };
-const { cid } = router.query as { cid: string };
 
 const cardInfoQueryReturn = reactive(useCardInfo(id));
 const cardInfo = toRef(cardInfoQueryReturn, 'data');
 
-const cardDecksQueryReturn = reactive(useCardDecks(cid));
+const cardDecksQueryReturn = reactive(useCardDecks(id));
 const cardDecks = toRef(cardDecksQueryReturn, 'data');
 
 const { copy, isSupported } = useClipboard();
@@ -102,32 +101,32 @@ const { copy, isSupported } = useClipboard();
             <ul class="flex flex-col gap-4">
               <li class="flex justify-between">
                 <span>Ranking</span>
-                <span class="text-gray">{{ cardInfo.ranking }}</span>
+                <span class="text-gray">{{ cardInfo.pro_file.ranking }}</span>
               </li>
 
               <li class="flex justify-between">
                 <span>Popularity</span>
-                <span class="text-gray">{{ cardInfo.popularity }}</span>
+                <span class="text-gray">{{ cardInfo.pro_file.popularity }}</span>
               </li>
 
               <li class="flex justify-between">
                 <span>Win Rate</span>
-                <span class="text-gray">{{ cardInfo.win_rate }}</span>
+                <span class="text-gray">{{ cardInfo.pro_file.win_rate }}</span>
               </li>
 
               <li class="flex justify-between">
                 <span>Cube Rate</span>
-                <span class="text-gray">{{ cardInfo.cube_rate }}</span>
+                <span class="text-gray">{{ cardInfo.pro_file.cube_rate }}</span>
               </li>
 
               <li class="flex justify-between">
                 <span># of Games</span>
-                <span class="text-gray">{{ cardInfo.of_games }}</span>
+                <span class="text-gray">{{ cardInfo.pro_file.of_games }}</span>
               </li>
 
               <li class="flex justify-between">
                 <span># of Cubes</span>
-                <span class="text-gray">{{ cardInfo.of_cubes }}</span>
+                <span class="text-gray">{{ cardInfo.pro_file.of_cubes }}</span>
               </li>
             </ul>
           </div>
@@ -137,7 +136,7 @@ const { copy, isSupported } = useClipboard();
           <h3 class="mb-3 text-2xl">Variants</h3>
 
           <ul class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-y-9 py-4">
-            <li v-for="variant_image of cardInfo.variant_images">
+            <li v-for="variant_image of cardInfo.pro_file.variant_images">
               <div class="relative pb-[100%] w-full h-0">
                 <img
                   class="absolute inset-0 w-full h-full scale-120"

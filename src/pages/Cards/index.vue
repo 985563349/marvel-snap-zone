@@ -53,7 +53,7 @@ const pools = [
             name="pool"
             class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
           >
-            <option disabled value="">Source</option>
+            <option value="">Source</option>
             <option v-for="pool of pools" :value="pool">{{ pool }}</option>
           </select>
         </label>
@@ -67,7 +67,7 @@ const pools = [
     <div v-else-if="filteredCards" class="p-4">
       <ul class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-y-6">
         <li v-for="{ cid, art, name } of filteredCards">
-          <router-link :to="`/cards/${kebabCase(name)}?cid=${cid}`">
+          <router-link :to="`/cards/${kebabCase(name)}`">
             <div class="relative mb-4 pb-[100%] h-0">
               <img
                 class="absolute inset-0 w-full h-full scale-125 pointer-events-none"
