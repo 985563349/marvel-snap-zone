@@ -10,7 +10,7 @@ export default function useDecks() {
 
   const fetcher = ({ pageParam = 1, queryKey }: any) => {
     const params = new URLSearchParams({ currentPage: pageParam, ...queryKey[1] }).toString();
-    return fetch(`http://localhost:3008/api/decks?${params}`).then((response) => response.json());
+    return fetch(`http://localhost:3000/api/decks?${params}`).then((response) => response.json());
   };
 
   const queryReturn = useInfiniteQuery({

@@ -10,7 +10,7 @@ type CardModel = {
 
 export default function useCards() {
   const fetcher = () =>
-    fetch('http://localhost:3008/api/cards').then((response) => response.json());
+    fetch('http://localhost:3000/api/cards').then((response) => response.json());
 
   return useQuery<CardModel[]>({
     queryKey: ['cards'],

@@ -158,24 +158,27 @@ const { copy, isSupported } = useClipboard();
           </div>
 
           <ul v-else-if="cardDecks" class="flex flex-col divide-y divide-solid divide-gray-700">
-            <li v-for="{ info, cards } of cardDecks" class="py-6 first:pt-0 last:pb-0">
+            <li
+              v-for="{ name, lastup, code, cards } of cardDecks"
+              class="py-6 first:pt-0 last:pb-0"
+            >
               <div class="flex justify-between items-start mb-4">
                 <p class="flex-1 space-x-2">
-                  <span class="text-sm">{{ info.name }}</span>
-                  <span class="text-xs text-gray-500">{{ timeAgo(info.lastup) }}</span>
+                  <span class="text-sm">{{ name }}</span>
+                  <span class="text-xs text-gray-500">{{ timeAgo(lastup) }}</span>
                 </p>
-                <span v-if="isSupported" class="cursor-pointer" @click="copy(info.code)">
+                <span v-if="isSupported" class="cursor-pointer" @click="copy(code)">
                   <img class="w-5 h-5" :src="download" alt="download" />
                 </span>
               </div>
 
               <ul class="grid grid-cols-6 md:grid-cols-9 lg:grid-cols-12 gap-y-4">
-                <li v-for="{ art, cname } of cards">
+                <li v-for="{ art, name } of cards">
                   <div class="relative pb-[100%] h-0">
                     <img
                       class="absolute inset-0 w-full h-full scale-125"
                       v-lazy="art"
-                      :alt="cname"
+                      :alt="name"
                     />
                   </div>
                 </li>
