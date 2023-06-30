@@ -66,7 +66,7 @@ const pools = [
 
     <div v-else-if="filteredCards" class="p-4">
       <ul class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-y-6">
-        <li v-for="{ cid, art, name } of filteredCards">
+        <li v-for="{ art, name } of filteredCards">
           <router-link :to="`/cards/${kebabCase(name)}`">
             <div class="relative mb-4 pb-[100%] h-0">
               <img
