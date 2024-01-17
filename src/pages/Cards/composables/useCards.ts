@@ -16,7 +16,6 @@ export default function useCards() {
   return useQuery<CardModel[]>({
     queryKey: ['cards'],
     queryFn: fetcher,
-    refetchOnWindowFocus: false,
     networkMode: 'offlineFirst',
   });
 }

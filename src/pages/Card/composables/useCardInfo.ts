@@ -9,7 +9,6 @@ export default function useCardInfo(id: string) {
   return useQuery({
     queryKey: ['card-info', id],
     queryFn: () => fetcher(id),
-    refetchOnWindowFocus: false,
     networkMode: 'offlineFirst',
   });
 }
