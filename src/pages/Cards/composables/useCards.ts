@@ -9,13 +9,14 @@ type CardModel = {
   source: string;
 };
 
-export default function useCards() {
-  const fetcher = () =>
-    fetch('https://marvel-snap-crawler.vercel.app/api/cards').then((response) => response.json());
+const fetcher = () =>
+  fetch('https://marvel-snap-crawler.vercel.app/api/cards').then((response) => response.json());
 
+export default function useCards() {
   return useQuery<CardModel[]>({
     queryKey: ['cards'],
     queryFn: fetcher,
-    networkMode: 'always',
+    refetchOnWindowFocus: false,
+    networkMode: 'offlineFirst',
   });
 }
