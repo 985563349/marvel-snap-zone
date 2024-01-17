@@ -8,13 +8,12 @@ type CardModel = {
   source: string;
 };
 
-export default function useCards() {
-  const fetcher = () =>
-    fetch('http://localhost:3000/api/cards').then((response) => response.json());
+const fetcher = () => fetch('http://localhost:3000/api/cards').then((response) => response.json());
 
+export default function useCards() {
   return useQuery<CardModel[]>({
     queryKey: ['cards'],
     queryFn: fetcher,
-    networkMode: 'always',
+    networkMode: 'offlineFirst',
   });
 }
