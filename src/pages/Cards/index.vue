@@ -53,7 +53,7 @@ const pools = [
             name="pool"
             class="px-4 border-1 border-gray-500 rounded w-full py-2 text-gray-400 bg-inherit appearance-none leading-tight focus:outline-none focus:border-purple-500"
           >
-            <option disabled value="">Source</option>
+            <option value="">Source</option>
             <option v-for="pool of pools" :value="pool">{{ pool }}</option>
           </select>
         </label>
